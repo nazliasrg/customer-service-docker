@@ -51,19 +51,6 @@ public class CustomerController {
         return ResponseEntity.ok(customerEntityList);
     }
 
-    @GetMapping("/add-customer")
-    public ResponseEntity<?> publishCustomer(@RequestBody CustomerDto customerDto){
-        StatusMessageDto result = new StatusMessageDto<>();
-
-        try{
-            return customerService.addCustomer(customerDto);
-        }
-        catch (Exception e){
-            result.setMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(result);
-        }
-    }
-
     @PutMapping("/edit-customer/{id}")
     public ResponseEntity<?> editProduct(@RequestBody CustomerDto customerDto, @PathVariable Integer id){
         StatusMessageDto result = new StatusMessageDto<>();

@@ -5,7 +5,6 @@ import com.microservices.customer.model.entity.CustomerEntity;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
-    ResponseEntity<?> addCustomer(CustomerDto customerDto);
     ResponseEntity<?> editCustomer(CustomerDto customerDto, Integer consumerId);
     ResponseEntity<?> deleteCustomer(Integer consumerId);
 

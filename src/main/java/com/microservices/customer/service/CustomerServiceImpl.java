@@ -26,35 +26,6 @@ public class CustomerServiceImpl implements UserDetailsService, CustomerService 
     private static final String TOPIC = "CustomerTopic";
 
     @Override
-    public ResponseEntity<?> addCustomer(CustomerDto dto) {
-        StatusMessageDto<CustomerEntity> result = new StatusMessageDto<>();
-
-        if(dto.getUsername() != null){
-            CustomerEntity customerEntity = new CustomerEntity();
-            customerEntity.setUsername(dto.getUsername());
-            customerEntity.setName(dto.getName());
-            customerEntity.setAddress(dto.getAddress());
-            customerEntity.setEmail(dto.getEmail());
-            customerEntity.setPhoneNumber(dto.getPhoneNumber());
-            customerEntity.setStatusAccount(1);
-            customerEntity.setSaldo(dto.getSaldo());
-            customerRepository.save(customerEntity);
-
-            kafkaTemplate.send(TOPIC, customerEntity);
-
-            result.setStatus(HttpStatus.OK.value());
-            result.setMessage(customerEntity.getUsername() + " has been added successfully!");
-            result.setData(customerEntity);
-            return ResponseEntity.ok(result);
-        }
-        else{
-            result.setStatus(HttpStatus.BAD_REQUEST.value());
-            result.setMessage("username is empty!");
-            return ResponseEntity.badRequest().body(result);
-        }
-    }
-
-    @Override
     public ResponseEntity<?> editCustomer(CustomerDto dto, Integer id) {
         StatusMessageDto<CustomerEntity> result = new StatusMessageDto<>();
 
