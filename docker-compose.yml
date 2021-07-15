@@ -4,8 +4,8 @@ services:
     container_name: customer-service
     image: nzlvrsrg/customer-service:0.0.1
     depends_on:
-      - customer-db
-    restart: always
+      customer-db :
+          condition: service_healthy
     build:
       context: ./
       dockerfile: Dockerfile
@@ -14,6 +14,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: password
       KAFKA_URL: kafka:29092
+    restart: always
     ports:
       - 8082:9090
     networks:
@@ -21,12 +22,15 @@ services:
   customer-db:
     container_name: customer-db
     image: mysql:5.7
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: customer_db
     ports:
       - 8002:3306
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      timeout: 20s
+      retries: 10
     networks:
       - microservices_network
 
