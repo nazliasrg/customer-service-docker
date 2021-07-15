@@ -25,6 +25,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: customer_db
+    restart: always
     ports:
       - 8002:3306
     healthcheck:
