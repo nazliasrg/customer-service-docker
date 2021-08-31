@@ -21,13 +21,13 @@ import java.util.Map;
 public class KafkaConfiguration {
 
     @Value("${kafka.url}")
-    private String kafakUrl;
+    private String kafkaUrl;
 
     @Bean
     public ProducerFactory<String, CustomerEntity> producerFactory(){
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafakUrl);
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
@@ -45,7 +45,7 @@ public class KafkaConfiguration {
     public ConsumerFactory<String, String> consumerFactory(){
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafakUrl);
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_customer2");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
